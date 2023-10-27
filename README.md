@@ -1,8 +1,26 @@
 # Project 6: Appserver and Database[^1]
 
-In this project you will start up a database system and convert your Photo Sharing App you built in Project 5 to fetch the views' models from it. We provide you a new `webServer.js` supporting the same interface as Project 5's web server but it also establishes a connection to a database. This allows you to make your app into a legitimate *full stack* application.
+## Scrum Team
+
+## Product Owner
+
+- Bhargavi Potu
+
+## Scrum Master
+
+- Sruthi Bandi
+
+## Developers
+
+- Sai Nikil Teja Swarna
+- Tejith Seetha Rama Sai Gali
+- Sahithi Rajaputhra
+- Veera Venkata Siva Naga Datta Sai Lingam
+
+In this project you will start up a database system and convert your Photo Sharing App you built in Project 5 to fetch the views' models from it. We provide you a new `webServer.js` supporting the same interface as Project 5's web server but it also establishes a connection to a database. This allows you to make your app into a legitimate _full stack_ application.
 
 ## Setup
+
 You should have MongoDB and Node.js installed on your system. If not, follow the installation instructions in [Project 0](https://github.com/btdobbs/WA/edit/main/Project/00/README.md) now.
 
 **\*IMPORTANT!\***  
@@ -37,6 +55,7 @@ node loadDatabase.js
 This program loads the fake model data from previous projects (i.e. `modelData/photoApp.js`) into the database. Since our app currently doesn't have any support for adding or updating things you should only need to run `loadDatabase.js` once. The program erases whatever is in the database before loading the data set so it is safe to run multiple times.
 
 We use the [MongooseJS](http://mongoosejs.com/) Object Definition Language (ODL) to define a [schema](http://mongoosejs.com/docs/guide.html) to store the photo app data in MongoDB. The schema definition files are in the directory `schema`:
+
 - `schema/user.js` - Defines the User collection containing the objects describing each user.
 - `schema/photo.js` - Defines the Photos collection containing the objects describing each photo. It also defines the objects we use to store the comments made on the photo.
 - `schema/schemaInfo.js` - Defines the SchemaInfo collection containing the object describing the schema version.
@@ -70,7 +89,7 @@ After updating your Photo Share App with the new files from Project 6 and starti
 The `webServer.js` we give you in this project is like the Project 5 `webServer.js` in that the app's model fetching routes use the magic `models` rather than a database. Your job is to convert all the routes to use the MongoDB database. There should be no accesses to `models` in your code and your app should work without the line:
 
 ```javascript
-var models = require('./modelData/photoApp.js').models;
+var models = require("./modelData/photoApp.js").models;
 ```
 
 in `webServer.js`, Note that any `console.log` statements in `webServer.js` will print to the terminal rather than the browser.
@@ -83,15 +102,15 @@ As in Project 5 the web server will return JSON encoded model data in response t
 
 - `/user/list` - Return the list of users' models appropriate for the navigation sidebar list. Since we anticipate a large numbers of users, this API should only return an array of the user properties needed by the navigation side bar (`_id, first_name, last_name`). It replaces the `models.userListModel()` call in the provided code.
 
-- `/user/:id` - Return the detail information of the user with _id of id. This should return the information we have on the user for the detail view (`_id, first_name, last_name, location, description, occupation`) and replaces the `models.userModel()` call. If something other than the id of a User is provided the response should be an HTTP status of 400 and an informative message.
+- `/user/:id` - Return the detail information of the user with \_id of id. This should return the information we have on the user for the detail view (`_id, first_name, last_name, location, description, occupation`) and replaces the `models.userModel()` call. If something other than the id of a User is provided the response should be an HTTP status of 400 and an informative message.
 
-- `/photosOfUser/:id` - Return the photos of the user with _id of id. This call generates all the model data needed for the photos view including all the photos of the user as well as the comments on the photos. The photos properties should be (`_id, user_id, comments, file_name, date_time`) and the comments array elements should have (`comment, date_time, _id, user`) and only the minimum `user` object information (`_id, first_name, last_name`). This replaces the `models.photoOfUserModel()` call. If something other than the id of a User is provided the response should be an HTTP status of 400 and an informative message. Note this API will need some assembling from multiple different objects in the database. The assignment's `package.json` file fetches the async module to make the assembling the multiple photos easier.
+- `/photosOfUser/:id` - Return the photos of the user with \_id of id. This call generates all the model data needed for the photos view including all the photos of the user as well as the comments on the photos. The photos properties should be (`_id, user_id, comments, file_name, date_time`) and the comments array elements should have (`comment, date_time, _id, user`) and only the minimum `user` object information (`_id, first_name, last_name`). This replaces the `models.photoOfUserModel()` call. If something other than the id of a User is provided the response should be an HTTP status of 400 and an informative message. Note this API will need some assembling from multiple different objects in the database. The assignment's `package.json` file fetches the async module to make the assembling the multiple photos easier.
 
 To help you make sure your web server conforms to the proper API we provide a test suite in the sub-directory `test`. **Please make sure that all of the tests in the suite pass before submitting.** See the Testing section below for details.
 
 Your GET requests do not return exactly the same thing that the `models` functions return but they do need to return the information needed by your app so that the model data of each view can be displayed with a single `FetchModel` call. You will need to do subsetting and/or augmentation of the objects coming from the database to build your response to meet the needs of the UI. For this assignment you are not allow to alter the database schema in anyway.
 
-**\*IMPORTANT!\***    
+**\*IMPORTANT!\***
 
 Implementing these Express request handlers requires interacting with two different "model" data objects. The Mongoose system returns [models](http://mongoosejs.com/docs/models.html) from the objects stored in MongoDB while the request itself should return the data models needed by the Photo App views. Unfortunately since the Mongoose models are set by the database schema and front end models are set by the needs of the UI views they don't align perfectly. Handling these requests will require processing to assemble the model needed by the front end from the Mongoose models returned from the database.
 
@@ -114,7 +133,7 @@ Here are some hints for making the switch to `axios`:
 - In any components fetching data using `axio`s, be sure to import it as follows:
 
 ```javascript
-import axios from 'axios';
+import axios from "axios";
 ```
 
 Notice that `axios.get` returns a Promise, much like `FetchModel`. We can attach success and failure handlers using `.then` and `.catch` respectively. It's important to handle both success and error cases for any requests. You shouldn't have to change the logic of your handlers from `FetchModel`, very much, or at all, when attaching them to `axios.get`.
