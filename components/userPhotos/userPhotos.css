@@ -1,0 +1,44 @@
+.ButtonLink {
+  margin-bottom: 25px;
+}
+
+.UserPhotosHeader {
+  font-size: 26px;
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.DateTaken {
+  font-size: 14px;
+  color: #95a5a6;
+}
+
+.user-photo-box {
+  border: 2px solid #3498db;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #f7f9fc;
+  transition: background-color 0.3s ease;
+}
+
+.user-photo-box:hover {
+  background-color: #eef2f7;
+}
+
+.user-photo-title {
+  font-weight: bold;
+  color: #2980b9;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.user-photo-value {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.loading-text {
+  font-style: italic;
+  color: #7f8c8d;
+}
