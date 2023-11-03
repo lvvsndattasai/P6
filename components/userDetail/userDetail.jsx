@@ -2,8 +2,9 @@ import React from 'react';
 import { Typography, Button, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import './userDetail.css';
+import axios from 'axios'; // Import Axios
 import TopBar from '../topBar/TopBar';
-import FetchModel from '../../lib/fetchModelData'; // Import the FetchModel function
+
 
 class UserDetail extends React.Component {
   constructor(props) {
@@ -30,8 +31,8 @@ class UserDetail extends React.Component {
     const { match } = this.props;
     const { userId } = match.params;
 
-    // Use FetchModel to fetch user details from the server
-    FetchModel(`/user/${userId}`)
+    // Use Axios to fetch user details from the server
+    axios.get(`/user/${userId}`)
       .then((response) => {
         this.setState({ user: response.data });
       })
