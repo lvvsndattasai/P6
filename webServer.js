@@ -10,13 +10,10 @@ const User = require("./schema/user.js");
 const Photo = require("./schema/photo.js");
 const SchemaInfo = require("./schema/schemaInfo.js");
 
-mongoose.connect(
-  "mongodb+srv://dattasai:dattasai@cluster0.erwon.mongodb.net/project6",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect("mongodb://127.0.0.1/project6", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const app = express();
 app.use(express.static(__dirname));

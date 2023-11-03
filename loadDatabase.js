@@ -20,10 +20,10 @@
 var mongoose = require("mongoose");
 mongoose.Promise = require("bluebird");
 mongoose.set("strictQuery", false);
-mongoose.connect(
-  "mongodb+srv://dattasai:dattasai@cluster0.erwon.mongodb.net/project6",
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
+mongoose.connect("mongodb://127.0.0.1/project6", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // Get the magic models we used in the previous projects.
 var models = require("./modelData/photoApp.js").models;
