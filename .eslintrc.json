@@ -8,11 +8,8 @@
     "plugin:react/recommended"
   ],
   "parser": "@babel/eslint-parser",
-  "parserOptions": {
-    "ecmaVersion": 2022
-  },
   "rules": {
-    // rules
+    // CS rules
     "no-console": 0,
     "react/prop-types": "off",
     "no-empty": ["error", { "allowEmptyCatch": true }],
@@ -78,6 +75,7 @@
     "no-var": 0,
     "quotes": 0,
     "vars-on-top": 0,
+    "no-path-concat": 0,
 
     // Spacing rules
     "block-spacing": 0,
