@@ -2,16 +2,17 @@ import React from 'react';
 import { Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import './userPhotos.css';
+import axios from 'axios'; // Import Axios
 import TopBar from '../topBar/TopBar';
-import FetchModel from '../../lib/fetchModelData'; 
+
 
 class UserPhotos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       photos: [],
-      user: null, // Initialize user as null
-      comment: null, // Initialize comment as null
+      user: null,
+      comment: null,
     };
   }
 
@@ -32,8 +33,8 @@ class UserPhotos extends React.Component {
     const { match } = this.props;
     const { userId } = match.params;
 
-    // Use FetchModel to fetch user photos from the server
-    FetchModel(`/photosOfUser/${userId}`)
+    // Use Axios to fetch user photos from the server
+    axios.get(`/photosOfUser/${userId}`)
       .then((response) => {
         this.setState({ photos: response.data });
       })
@@ -41,8 +42,8 @@ class UserPhotos extends React.Component {
         console.error('Error fetching user photos:', error);
       });
 
-    // Use FetchModel to fetch user details from the server
-    FetchModel(`/user/${userId}`)
+    // Use Axios to fetch user details from the server
+    axios.get(`/user/${userId}`)
       .then((response) => {
         this.setState({
           user: response.data,
@@ -82,7 +83,7 @@ class UserPhotos extends React.Component {
             <div key={photo._id} className="photo-item">
               <img
                 src={`/images/${photo.file_name}`}
-                alt={`User ${userId}'s Photo`}
+                // alt={`User ${userId}'s Photo`}
                 className="photo-image"
               />
               <div className="user-photo-box" style={{ marginTop: '16px' }}>
@@ -95,34 +96,29 @@ class UserPhotos extends React.Component {
               </div>
 
               {photo.comments && photo.comments.length > 0 && (
-                    <div
-                      style={{}}
-                    >
-                      <p style={{ margin: 0, fontWeight: 'bold' }}>Comments:</p>
-                      {photo.comments.map((comment) => (
-                        <div className="user-photo-box" style={{ marginTop: '16px' }}>
-                          <p>{comment.comment}</p>
-                          <p>
-                            <b>Commented ON:</b> {comment.date_time}
-                          </p>
-                          <p>
-                            <b>Commented BY:</b>
-                            <Link to={`/users/${comment.user._id}`}>{comment.user.first_name} {comment.user.last_name}</Link>
-                          </p>
-                        </div>
-                      ))}
+                <div>
+                  <p style={{ margin: 0, fontWeight: 'bold' }}>Comments:</p>
+                  {photo.comments.map((userComment) => (
+                    <div key={userComment._id} className="user-photo-box" style={{ marginTop: '16px' }}>
+                      <p>{userComment.comment}</p>
+                      <p>
+                        <b>Commented ON:</b> {userComment.date_time}
+                      </p>
+                      <p>
+                        <b>Commented BY:</b>
+                        <Link to={`/users/${userComment.user._id}`}>{userComment.user.first_name} {userComment.user.last_name}</Link>
+                      </p>
                     </div>
-                  )}
-
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
 
-
-
-        {user ? ( // Display user-related information if user exists
+        {user ? (
           <div>
-            {comment && ( // Display comment if available
+            {comment && (
               <div className="user-photo-box" style={{ marginTop: '16px' }}>
                 <Typography variant="caption" className="user-photo-title">
                   Comment
